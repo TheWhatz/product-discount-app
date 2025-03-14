@@ -55,17 +55,25 @@ export default function Checkout() {
       }
     };
 
-    calculateDiscount();
+    if (cart.length !== 0) {
+      calculateDiscount();
+    }
   }, [cart]);
 
   useEffect(() => {
     const cart = localStorage.getItem("cart");
     if (cart) {
-      setCart(JSON.parse(cart));
+      try {
+        setCart(JSON.parse(cart));
+      } catch (error: any) {
+        localStorage.removeItem("cart");
+        redirect("/");
+      }
     } else {
       redirect("/");
     }
   }, []);
+
   return (
     <div className="min-h-screen">
       <div className="container mx-auto p-5">
