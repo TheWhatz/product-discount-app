@@ -29,15 +29,16 @@ const ProductList = () => {
     setCart((prevCart) => {
       const existProduct = prevCart.find((cartItem) => cartItem.id === item.id);
       if (existProduct) {
-        return prevCart
-          .map((cartItem): CartItem => {
-            if (cartItem.quantity < item.stock) {
-              return { ...cartItem, quantity: cartItem.quantity + quantity };
-            } else {
-              return cartItem;
-            }
-          })
-          .filter(Boolean);
+        return prevCart.map((cartItem): CartItem => {
+          if (cartItem.id === item.id) {
+            const newQuantity = Math.min(
+              cartItem.quantity + quantity,
+              item.stock
+            );
+            return { ...cartItem, quantity: newQuantity };
+          }
+          return cartItem;
+        });
       }
 
       if (quantity <= item.stock) {
@@ -63,9 +64,11 @@ const ProductList = () => {
         <li className="border border-zinc-700 rounded p-5" key={product.id}>
           <div className="flex justify-center">
             <Image
+              width={300}
+              height={300}
               src={product.image}
               alt="product-image"
-              className="object-cover h-75 w-75 rounded"
+              className="object-cover rounded"
             />
           </div>
           <div className="py-3 flex flex-col items-center">
