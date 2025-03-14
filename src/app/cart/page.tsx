@@ -34,27 +34,27 @@ export default function Checkout() {
     redirect("/");
   };
 
+  const calculateDiscount = async () => {
+    try {
+      const response = await fetch("/api/discount", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart,
+          discountCampaigns,
+        }),
+      });
+
+      const data = await response.json();
+      setFinalPrice(data.finalPrice);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    const calculateDiscount = async () => {
-      try {
-        const response = await fetch("/api/discount", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            cart,
-            discountCampaigns,
-          }),
-        });
-
-        const data = await response.json();
-        setFinalPrice(data.finalPrice);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     if (cart.length !== 0) {
       calculateDiscount();
     }
@@ -63,12 +63,7 @@ export default function Checkout() {
   useEffect(() => {
     const cart = localStorage.getItem("cart");
     if (cart) {
-      try {
-        setCart(JSON.parse(cart));
-      } catch (error: any) {
-        localStorage.removeItem("cart");
-        redirect("/");
-      }
+      setCart(JSON.parse(cart));
     } else {
       redirect("/");
     }
