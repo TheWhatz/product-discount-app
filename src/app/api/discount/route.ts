@@ -7,8 +7,11 @@ export async function POST(request: Request) {
 
     const finalPrice = calculateFinalPrice(cart, discountCampaigns);
     return NextResponse.json({ finalPrice });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message });
+    }
+    return NextResponse.json({ error: "An unknown error occurred" });
   }
 }
 

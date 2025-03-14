@@ -3,9 +3,10 @@
 import React from "react";
 import products from "@/data/product.json";
 import { formatPrice } from "@/lib/utils";
-import { Product } from "@/type";
+import { CartItem, Product } from "@/type";
 import { useCart } from "@/contexts/CartContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const ProductList = () => {
   const { setCart } = useCart();
@@ -29,7 +30,7 @@ const ProductList = () => {
       const existProduct = prevCart.find((cartItem) => cartItem.id === item.id);
       if (existProduct) {
         return prevCart
-          .map((cartItem): any => {
+          .map((cartItem): CartItem => {
             if (cartItem.quantity < item.stock) {
               return { ...cartItem, quantity: cartItem.quantity + quantity };
             } else {
@@ -61,7 +62,7 @@ const ProductList = () => {
       {products.map((product) => (
         <li className="border border-zinc-700 rounded p-5" key={product.id}>
           <div className="flex justify-center">
-            <img
+            <Image
               src={product.image}
               alt="product-image"
               className="object-cover h-75 w-75 rounded"

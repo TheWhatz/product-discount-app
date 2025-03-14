@@ -8,9 +8,7 @@ import { formatPrice } from "@/lib/utils";
 export default function Checkout() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [finalPrice, setFinalPrice] = useState<number | null>(null);
-  const [discountCampaigns, setDiscountCampaigns] = useState<
-    DiscountCampaign[]
-  >([
+  const [discountCampaigns] = useState<DiscountCampaign[]>([
     {
       type: "Coupon",
       discountType: "Percentage",
@@ -31,44 +29,39 @@ export default function Checkout() {
     },
   ]);
 
-  const calculateDiscount = async () => {
-    try {
-      const response = await fetch("/api/discount", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          cart,
-          discountCampaigns,
-        }),
-      });
-
-      const data = await response.json();
-      setFinalPrice(data.finalPrice);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const clearCart = () => {
     localStorage.removeItem("cart");
     redirect("/");
   };
 
   useEffect(() => {
+    const calculateDiscount = async () => {
+      try {
+        const response = await fetch("/api/discount", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            cart,
+            discountCampaigns,
+          }),
+        });
+
+        const data = await response.json();
+        setFinalPrice(data.finalPrice);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     calculateDiscount();
   }, [cart]);
 
   useEffect(() => {
     const cart = localStorage.getItem("cart");
     if (cart) {
-      try {
-        setCart(JSON.parse(cart));
-      } catch (ex) {
-        localStorage.removeItem("cart");
-        redirect("/");
-      }
+      setCart(JSON.parse(cart));
     } else {
       redirect("/");
     }
