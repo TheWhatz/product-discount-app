@@ -2,39 +2,63 @@
   {
     "id": 1,
     "name": "เสื้อยืด",
-    "price": 250,
+    "price": 350,
     "image": "/images/tshirt.png",
     "category": "clothing",
     "stock": 10
   },
   {
     "id": 2,
-    "name": "กางเกงยีนส์",
-    "price": 800,
-    "image": "/images/jeans.png",
+    "name": "หมวก",
+    "price": 250,
+    "image": "/images/hat.png",
     "category": "clothing",
-    "stock": 2
+    "stock": 3
   },
   {
     "id": 3,
     "name": "นาฬิกา",
-    "price": 1500,
+    "price": 850,
     "image": "/images/watch.png",
     "category": "accessories",
-    "stock": 0
+    "stock": 5
   },
   {
     "id": 4,
+    "name": "กระเป๋า",
+    "price": 640,
+    "image": "/images/bag.png",
+    "category": "accessories",
+    "stock": 6
+  },
+  {
+    "id": 5,
+    "name": "เข็มขัด",
+    "price": 230,
+    "image": "/images/belt.png",
+    "category": "accessories",
+    "stock": 5
+  },
+  {
+    "id": 6,
+    "name": "เสื้อกันหนาว",
+    "price": 700,
+    "image": "/images/hoodie.png",
+    "category": "clothing",
+    "stock": 5
+  },
+  {
+    "id": 7,
     "name": "หูฟัง",
     "price": 500,
     "image": "/images/headphone.png",
     "category": "electronics",
-    "stock": 1
+    "stock": 0
   },
   {
-    "id": 5,
+    "id": 8,
     "name": "แหวน",
-    "price": 750,
+    "price": 1500,
     "image": "/images/ring.png",
     "category": "accessories",
     "stock": 5

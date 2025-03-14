@@ -12,32 +12,44 @@ const ProductList = () => {
   const router = useRouter();
 
   const handlePurchase = (item: Product) => {
-    setCart([{ productId: item.id, quantity: 1 }]);
+    setCart([
+      {
+        id: item.id,
+        category: item.category,
+        name: item.name,
+        price: item.price,
+        quantity: 1,
+      },
+    ]);
     router.push("/cart");
   };
 
   const handleAddCart = (item: Product, quantity: number) => {
     setCart((prevCart) => {
-      const existProduct = prevCart.find(
-        (cartItem) => cartItem.productId === item.id
-      );
+      const existProduct = prevCart.find((cartItem) => cartItem.id === item.id);
       if (existProduct) {
         return prevCart
           .map((cartItem): any => {
-            if (cartItem.productId === item.id) {
-              if (cartItem.quantity < item.stock) {
-                return { ...cartItem, quantity: cartItem.quantity + quantity };
-              } else {
-                return cartItem;
-              }
+            if (cartItem.quantity < item.stock) {
+              return { ...cartItem, quantity: cartItem.quantity + quantity };
+            } else {
+              return cartItem;
             }
-            return cartItem;
           })
           .filter(Boolean);
       }
 
       if (quantity <= item.stock) {
-        return [...prevCart, { productId: item.id, quantity }];
+        return [
+          ...prevCart,
+          {
+            id: item.id,
+            category: item.category,
+            name: item.name,
+            price: item.price,
+            quantity: quantity,
+          },
+        ];
       }
 
       return [...prevCart];
